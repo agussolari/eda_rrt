@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "geometry.h"
 
+#include "rrt.h"
+
 using namespace std ; 
 
 const int WIDTH = 800 ;
