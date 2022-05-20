@@ -12,7 +12,7 @@ void RRTClass::getInput(Point start , Point target)
 	this->start = start;
 	this->stop = target;
 
-	obstacle_cnt = 0;
+	obstacle_cnt = 1;
 	int pnts = 0;
 }
 
@@ -27,7 +27,7 @@ void RRTClass::addObstacule(vector<Point>& points)
 	poly.resize(points.size());
 
 	for(auto& p : points)
-		obstacles[obstacle_cnt].addPoint(p);
+		obstacles[obstacle_cnt - 1].addPoint(p);
 
 }
 
@@ -283,18 +283,25 @@ void RRTClass::RRTRun()
 				break;
 			}
 		}
-		RRTUpdate();
-		iterations++;
+		static int iteracionesExtra = 0;
+		if(pathFound && iteracionesExtra < 100)
+			iteracionesExtra++;
 
-		if (iterations % 500 == 0)
+		if(!pathFound || iteracionesExtra < 100)
 		{
-			cout << "Iterations: " << iterations << endl;
-			if (!pathFound)
-				cout << "Not reached yet :( " << endl;
-			else
-				cout << "Shortest distance till now: " << cost[goalIndex] << " units." << endl;
-			cout << endl;
+			RRTUpdate();
+			iterations++;
+			if (iterations % 500 == 0)
+			{
+				cout << "Iterations: " << iterations << endl;
+				if (!pathFound)
+					cout << "Not reached yet :( " << endl;
+				else
+					cout << "Shortest distance till now: " << cost[goalIndex] << " units." << endl;
+				cout << endl;
+			}
 		}
+
 
 		// sf::sleep(delayTime);
 		window.clear();

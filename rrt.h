@@ -28,7 +28,7 @@ private:
     const double GOAL_SAMPLING_PROB = (double)(0.10);
     const double INF = (double)(1e18);
 
-    const double JUMP_SIZE = (double)((WIDTH / 100.0 * HEIGHT / 100.0) / 1.0);
+    const double JUMP_SIZE = (double)((WIDTH / 100.0 * HEIGHT / 100.0) / 0.2);
     const double DISK_SIZE = (double)(JUMP_SIZE); // Ball radius around which nearby points are found
 
 
