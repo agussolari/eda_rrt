@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/agusraigoso/Escritorio/Rapidly-Exploring-Random-Trees-master/geometry.h
+math.h
+-
+vector
+-
+
+/home/agusraigoso/Escritorio/Rapidly-Exploring-Random-Trees-master/rrt.cpp
+iostream
+-
+cstdio
+-
+random
+-
+SFML/Graphics.hpp
+-
+geometry.h
+/home/agusraigoso/Escritorio/Rapidly-Exploring-Random-Trees-master/geometry.h
+
