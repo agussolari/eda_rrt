@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/agusraigoso/Escritorio/Rapidly-Exploring-Random-Trees-master/build",
-  "command": "/usr/bin/g++    -g   -o CMakeFiles/main.dir/rrt.cpp.o -c /home/agusraigoso/Escritorio/Rapidly-Exploring-Random-Trees-master/rrt.cpp",
-  "file": "/home/agusraigoso/Escritorio/Rapidly-Exploring-Random-Trees-master/rrt.cpp"
-}
-]
