@@ -31,26 +31,16 @@ sf::CircleShape startingPoint, endingPoint ;
 bool pathFound = 0 ;
 
 void getInput() {
-	cout << "NOTE:" << endl ; 
-	cout << "Height of screen: " << HEIGHT << " pixels." ;
-	cout << " Width of screeen: " << WIDTH << " pixels." << endl ;
-	cout << "Maximum distance by which algorithm jumps from one point to another: " << JUMP_SIZE << " units" << endl ;
-	cout << "If you would like to change of any of these, please make modifications in code" << endl ; 
-	cout << "Please provide your inputs keeping this in mind. " << endl << endl ;
-
-	cout << "Which type of RRT would you like to watch? 1 for RRT, 2 for RRT*, 3 for Anytime RRT" << endl ;
-	//cin >> whichRRT ;
 	whichRRT = 2;
-	cout << "Input co-ordinates of starting and ending point respectively in this format X1 Y1 X2 Y2" << endl ;
-	// cin >> start.x >> start.y >> stop.x >> stop.y;
+
 	start = {0,0};
 	stop = {599, 599};
-	cout << "How many obstacles?" << endl ; 
-	// cin >> obstacle_cnt ; 
+
 	obstacle_cnt = 1;
 	
 	obstacles.resize(obstacle_cnt); 
-	int pnts = 0 ; Point pnt ; 
+	int pnts = 0 ; 
+	Point pnt ; 
 	vector < Point > poly ; 
 	
 	poly.clear();
@@ -59,18 +49,6 @@ void getInput() {
 	obstacles[0].addPoint({220, 320});
 	obstacles[0].addPoint({400, 400});
 	obstacles[0].addPoint({270, 250});
-	/*for(int i = 0; i < obstacle_cnt; i++) {
-		poly.clear();
-		cout << "How many points in " << i+1 << "th polygon?" << endl ; 
-		cin >> pnts ; 
-		poly.resize(pnts);
-
-		cout << "Input co-ordinates of " << i+1 << "th polygon in clockwise order" << endl ;
-		for(int j = 0; j < pnts; j++) {
-			cin >> pnt.x >> pnt.y ; 
-			obstacles[i].addPoint(pnt);
-		}
-	}*/
 }
 
 // Prepares SFML objects of starting, ending point and obstacles 
@@ -253,41 +231,7 @@ void RRT() {
 	}
 }
 
-int main() {
-	getInput(); prepareInput(); 
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Basic Anytime RRT");
 
-	nodeCnt = 1; nodes.push_back(start); int iterations = 0 ; 
-	parent.push_back(0); cost.push_back(0);
-    sf::Time delayTime = sf::milliseconds(5);
-
-    cout << endl << "Starting node is in Pink and Destination node is in Blue" << endl << endl ; 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-            	window.close();
-            	return 0; exit(0);
-            }
-        }
-        RRT(); iterations++;
-        
-		if(iterations % 500 == 0) {
-			cout << "Iterations: " << iterations << endl ; 
-			if(!pathFound) cout << "Not reached yet :( " << endl ;
-			else cout << "Shortest distance till now: " << cost[goalIndex] << " units." << endl ;
-			cout << endl ;
-		}
-
-		//sf::sleep(delayTime);
-		window.clear();
-		draw(window); 
-        window.display();
-    }
-}
 
 /* SOME SAMPLE INPUTS ARE SHOWN BELOW (only cin part) without any RRT preference */ 
 
