@@ -11,5 +11,7 @@ geometry.o: geometry.cpp geometry.h
 	g++ -c geometry.cpp
 
 run:
-	rm *.o
 	./main
+
+clean:
+	rm *.o
