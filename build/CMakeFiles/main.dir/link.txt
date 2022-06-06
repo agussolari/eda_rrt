@@ -1,0 +1,1 @@
+/usr/bin/g++  -O2 -g -DNDEBUG  -rdynamic CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/geometry.cpp.o CMakeFiles/main.dir/rrt.cpp.o  -o main  -lsfml-graphics -lsfml-window -lsfml-system 

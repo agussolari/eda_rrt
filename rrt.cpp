@@ -55,54 +55,6 @@ void RRTClass::prepareInput()
 	}
 }
 
-void RRTClass::draw(sf::RenderWindow &window)
-{
-	sf::Vertex line[2];
-	sf::CircleShape nodeCircle;
-
-	// Uncomment if circular nodes are to be drawn
-
-	for (auto &node : nodes)
-	{
-		nodeCircle.setRadius(RADIUS / 2.5); // nodeCircle.setRadius(min(2.0, RADIUS/2.0));
-		nodeCircle.setOrigin(RADIUS / 2.5, RADIUS / 2.5);
-		nodeCircle.setFillColor(sf::Color(0, 255, 171));
-		nodeCircle.setPosition(node.x, node.y);
-		window.draw(nodeCircle);
-	}
-
-	// Draw obstacles
-	for (auto &poly : polygons)
-		window.draw(poly);
-
-	// Draw edges between nodes
-	for (int i = (int)nodes.size() - 1; i; i--)
-	{
-		Point par = nodes[parent[i]];
-		line[0] = sf::Vertex(sf::Vector2f(par.x, par.y));
-		line[1] = sf::Vertex(sf::Vector2f(nodes[i].x, nodes[i].y));
-		window.draw(line, 2, sf::Lines);
-	}
-
-	window.draw(startingPoint);
-	window.draw(endingPoint);
-
-	// If destination is reached then path is retraced and drawn
-	if (pathFound)
-	{
-		int node = goalIndex;
-		while (parent[node] != node)
-		{
-			int par = parent[node];
-			line[0] = sf::Vertex(sf::Vector2f(nodes[par].x, nodes[par].y));
-			line[1] = sf::Vertex(sf::Vector2f(nodes[node].x, nodes[node].y));
-			line[0].color = line[1].color = sf::Color::Red; // orange color
-			window.draw(line, 2, sf::Lines);
-			node = par;
-		}
-	}
-}
-
 template <typename T> // Returns a random number in [low, high]
 T RRTClass::randomCoordinate(T low, T high)
 {
@@ -135,12 +87,11 @@ Point RRTClass::pickRandomPoint()
 void RRTClass::checkDestinationReached()
 {
 	sf::Vector2f position = endingPoint.getPosition();
+
 	if (checkCollision(nodes[parent[nodeCnt - 1]], nodes.back(), Point(position.x, position.y), RADIUS))
 	{
 		pathFound = 1;
 		goalIndex = nodeCnt - 1;
-		cout << "Reached!! With a distance of " << cost.back() << " units. " << endl
-			 << endl;
 	}
 }
 
@@ -160,6 +111,7 @@ void RRTClass::insertNodesInPath(int rootIndex, Point &q)
 		cost.push_back(cost[rootIndex] + distance(p, nxt));
 		rootIndex = nodeCnt++;
 		p = nxt;
+
 	}
 }
 
@@ -252,14 +204,25 @@ void RRTClass::RRTUpdate()
 		updated = true;
 		if (!pathFound)
 			checkDestinationReached();
+			
 		rewire();
+		
+		if (pathFound)
+		{
+			int node = goalIndex;
+			while (parent[node] != node)
+			{
+				int par = parent[node];
+				cout << "Point: " << nodes[node].x << " ; " << nodes[node].y << endl;
+				node = par;
+			}
+		}
 	}
 }
 
 void RRTClass::RRTRun()
 {
 	prepareInput();
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Basic Anytime RRT");
 
 	nodeCnt = 1;
 	nodes.push_back(start);
@@ -268,174 +231,10 @@ void RRTClass::RRTRun()
 	cost.push_back(0);
 	sf::Time delayTime = sf::milliseconds(5);
 
-	cout << endl
-		 << "Starting node is in Pink and Destination node is in Blue" << endl
-		 << endl;
-	while (window.isOpen())
+
+	while(!pathFound)
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				window.close();
-				exit(0);
-				break;
-			}
-		}
-		static int iteracionesExtra = 0;
-		if(pathFound && iteracionesExtra < 100)
-			iteracionesExtra++;
-
-		if(!pathFound || iteracionesExtra < 100)
-		{
-			RRTUpdate();
-			iterations++;
-			if (iterations % 500 == 0)
-			{
-				cout << "Iterations: " << iterations << endl;
-				if (!pathFound)
-					cout << "Not reached yet :( " << endl;
-				else
-					cout << "Shortest distance till now: " << cost[goalIndex] << " units." << endl;
-				cout << endl;
-			}
-		}
-
-
-		// sf::sleep(delayTime);
-		window.clear();
-		draw(window);
-		window.display();
+		RRTUpdate();
 	}
+	
 }
-	/* SOME SAMPLE INPUTS ARE SHOWN BELOW (only cin part) without any RRT preference */
-
-	/*
-	100 70
-	600 400
-	2
-	4
-	200 480
-	200 100
-	250 100
-	250 480
-	5
-	400 0
-	300 100
-	350 250
-	450 250
-	500 100
-	*/
-
-	/*
-	50 50
-	750 180
-	3
-	4
-	100 0
-	200 0
-	200 400
-	100 400
-	4
-	250 200
-	350 200
-	350 600
-	250 600
-	4
-	400 50
-	550 50
-	550 250
-	400 250
-	*/
-
-	/*
-	50 50
-	750 580
-	3
-	4
-	100 0
-	200 0
-	200 400
-	100 400
-	4
-	250 200
-	350 200
-	350 600
-	250 600
-	4
-	400 32
-	700 32
-	700 575
-	400 575
-	*/
-
-	/*
-	190 30
-	660 500
-	5
-	3
-	200 50
-	200 200
-	350 200
-	3
-	220 50
-	370 50
-	370 200
-	3
-	400 250
-	400 450
-	600 450
-	3
-	430 250
-	630 250
-	630 450
-	3
-	640 470
-	640 550
-	680 550
-	*/
-
-	/*
-	190 55
-	660 500
-	9
-	4
-	740 360
-	750 350
-	680 540
-	670 530
-	3
-	710 290
-	780 350
-	630 380
-	3
-	520 450
-	620 540
-	349 580
-	4
-	450 70
-	700 70
-	700 240
-	450 240
-	3
-	200 50
-	200 200
-	350 200
-	3
-	220 50
-	370 50
-	370 200
-	3
-	400 250
-	400 450
-	600 450
-	3
-	430 250
-	630 250
-	630 450
-	3
-	640 470
-	640 550
-	680 550
-	*/

@@ -17,5 +17,5 @@ int main()
     };
     rrt.getInput({0,0},{600,600});
     rrt.addObstacule(obstaculo);
-   rrt.RRTRun();
+    rrt.RRTRun();
 }

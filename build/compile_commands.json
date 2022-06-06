@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/agusraigoso/Escritorio/itba-eda-rrt/build",
+  "command": "/usr/bin/g++    -O2 -g -DNDEBUG   -o CMakeFiles/main.dir/main.cpp.o -c /home/agusraigoso/Escritorio/itba-eda-rrt/main.cpp",
+  "file": "/home/agusraigoso/Escritorio/itba-eda-rrt/main.cpp"
+},
+{
+  "directory": "/home/agusraigoso/Escritorio/itba-eda-rrt/build",
+  "command": "/usr/bin/g++    -O2 -g -DNDEBUG   -o CMakeFiles/main.dir/geometry.cpp.o -c /home/agusraigoso/Escritorio/itba-eda-rrt/geometry.cpp",
+  "file": "/home/agusraigoso/Escritorio/itba-eda-rrt/geometry.cpp"
+},
+{
+  "directory": "/home/agusraigoso/Escritorio/itba-eda-rrt/build",
+  "command": "/usr/bin/g++    -O2 -g -DNDEBUG   -o CMakeFiles/main.dir/rrt.cpp.o -c /home/agusraigoso/Escritorio/itba-eda-rrt/rrt.cpp",
+  "file": "/home/agusraigoso/Escritorio/itba-eda-rrt/rrt.cpp"
+}
+]

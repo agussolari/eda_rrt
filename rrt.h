@@ -49,7 +49,6 @@ private:
 
     sf::CircleShape startingPoint, endingPoint;
 
-    void draw(sf::RenderWindow &window);
 
     template <typename T> // Returns a random number in [low, high]
     T randomCoordinate(T low, T high);
